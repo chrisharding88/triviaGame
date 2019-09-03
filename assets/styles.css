@@ -1,0 +1,46 @@
+body{
+    background: linear-gradient(to right, #f00800,#0020f0);
+}
+
+#trivia-question{
+    text-align: center;
+    margin: 0 auto;
+    border: 2px solid black;
+    width: 950px;
+    height: 450px;
+    margin-top: 12%;
+    padding: 30px;  
+    background-color: white;  
+}
+
+#logo{
+    width:50px;
+    height:70px;
+    float: left;
+    margin-left: 38%;
+    border-radius: 10%;
+    border: 2px solid white;
+}
+
+#title{
+    margin-right: 35%;
+    font-family: 'abolition', sans-serif; 
+    font-weight: bold; 
+    font-style: normal; 
+    letter-spacing: 4px;
+    font-size: 45px;
+    color: blue;
+}
+
+
+
+#time{
+    font-family: 'hydrophilia-iced', sans-serif; 
+    font-weight: 400; 
+    font-style: normal; 
+    font-size: 70px;
+    color: #f00c0c;
+    background-color: #110f0f;
+    width: 110px;
+    margin: 0 auto;
+}
