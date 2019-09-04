@@ -25,6 +25,11 @@ $(document).ready(function(){
         shotClock--;
         clockRunning = true;
         $("#time").html(shotClock);
+        
+        if (shotClock === 0){
+            stop();
+            alert("Time's Up");
+        }
 
     } 
 
@@ -37,10 +42,7 @@ $(document).ready(function(){
         clockRunning = false;
     }
 
-    if (shotClock === 0){
-        stop();
-        alert("Time's Up");
-    }
+    
 
 
 
