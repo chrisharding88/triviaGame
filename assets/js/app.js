@@ -3,8 +3,8 @@ $(document).ready(function(){
     //Global Variables
     var clockRunning = false;
     var clockId;
-    var currentOptions = 0;
-    var shotClock = 24;
+    let currentOptions = 0;
+    var shotClock;
     let currentQuestion = 0;
 
     $("#question").hide();
@@ -32,6 +32,7 @@ $(document).ready(function(){
         if (shotClock === 0){
             stop();
             alert("Time's Up");
+            nextDisplayQuestion();
         }
 
     } 
@@ -46,9 +47,11 @@ $(document).ready(function(){
         clockRunning = false;
     }
 
+  
 
 
     function displayQuestion(){
+        shotClock = 24;
         const question = questionBank[currentQuestion].question;
         const options = questionBank[currentQuestion].options;
 
@@ -86,7 +89,14 @@ $(document).ready(function(){
    }
 
 
+   function nextDisplayQuestion(){
+    //incrementing the Question Bank
+    currentQuestion++
+    //executes the displayQuestion function
+    displayQuestion();
+}
 
+   
 
 
 
