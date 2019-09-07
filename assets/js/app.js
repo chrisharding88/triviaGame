@@ -3,9 +3,10 @@ $(document).ready(function(){
     //Global Variables
     var clockRunning = false;
     var clockId;
-    let currentOptions = 0;
     var shotClock;
     let currentQuestion = 0;
+    var answersCorrect = 0;
+    var answersWrong = 0;
 
     $("#question").hide();
     $(".answers").hide();
@@ -17,6 +18,8 @@ $(document).ready(function(){
             $(".answers").show();
             $(this).hide();
             clock();
+            displayQuestion();
+
         });
 
     }
@@ -37,13 +40,14 @@ $(document).ready(function(){
 
     } 
 
+    
     function run(){
-        intervalId = setInterval(clock, 1000);
+        clockId = setInterval(clock, 1000);
     } 
 
     // Stops the clock
     function stop(){
-        clearInterval(intervalId);
+        clearInterval(clockId);
         clockRunning = false;
     }
 
@@ -59,12 +63,12 @@ $(document).ready(function(){
        $('.answers').html(displayOptions(options));
     }
     
-   displayQuestion();
 
    function displayOptions(options){
-       
+    // Hides the old Answers so the new answers can come in the DOM
+    $('.answers').html('');
 
-       for (var i = 0; i < options.length; i++){
+       for (let i = 0; i < options.length; i++){
            var answer1 = $('#ans1');
            var answer2 = $('#ans2');
            var answer3 = $('#ans3');
@@ -80,22 +84,74 @@ $(document).ready(function(){
               answer4.attr('data-answer', options[i]);
            }
 
-           var choices = questionBank[currentOptions].options[i];
-           $('.answers').append('<p>' +'<button type = "button" class="btn btn-primary">' + choices + '</button>' + '</p>');
-
+           var choices = questionBank[currentQuestion].options[i];
+           // Adding new answers into the DOM 
+           $('.answers').append('<p>' + '<button class="optionBtn" type = "button">' + choices + '</button>' + '</p>');
+           
        }
-
-
+       
    }
 
 
-   function nextDisplayQuestion(){
-    //incrementing the Question Bank
-    currentQuestion++
-    //executes the displayQuestion function
-    displayQuestion();
-}
 
+
+    function nextDisplayQuestion(){
+        var isQuestionFinished = (questionBank.length - 1);
+
+        if (isQuestionFinished === currentQuestion){
+        console.log("Game Over");
+        showResult();       
+        } else {
+        currentQuestion++;
+        displayQuestion();
+
+        }
+
+    }
+
+
+    $(document).on('click','.optionBtn', function() {
+        clearInterval(clockId);
+        console.log('AYE', pickedAnswer);
+        var pickedAnswer = $(this).attr('data-answer');
+        var correctAnswer = questionBank[currentQuestion].correctAnswer;
+    
+        if (pickedAnswer === correctAnswer){
+            answersCorrect++;
+            console.log('Correct');
+            nextDisplayQuestion();
+        } else {
+            answersWrong++
+            console.log('Wrong');
+            nextDisplayQuestion();
+        } 
+     
+    
+    });
+
+
+    function showResult(){
+        const result = `
+        <p>You have ${answersCorrect} correct</p>
+        <p>You have ${answersWrong}</p>
+        <button class = "reset">Reset</button>
+        
+        `;
+        $('#gameDisplay').html(result);
+
+    }
+
+    $(document).on('click', '.reset', function(){
+        shotClock = 24; 
+        currentQuestion = 0;
+        answersCorrect = 0;
+        answersWrong = 0;
+        clockId = null;
+
+
+        displayQuestion(); 
+    });
+ 
    
 
 
@@ -144,4 +200,7 @@ $(document).ready(function(){
 
 
 });
+
+
+
 

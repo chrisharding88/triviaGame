@@ -3,7 +3,7 @@ const questionBank = [
     {
         question: "Which one of the players come from Kentucky?",
         options: ['Anthony Davis', 'Kyrie Irving', 'Kemba Walker','Giannis Antetokounmpo'],
-        correctAnswer: 0
+        correctAnswer: [0]
     },
 
     {
@@ -57,3 +57,5 @@ const questionBank = [
 
 
 ];
+
+
