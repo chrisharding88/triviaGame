@@ -2,11 +2,11 @@
 $(document).ready(function(){
     //Global Variables
     var clockRunning = false;
-    var clockId;
-    var shotClock;
+    let clockId;
+    let shotClock;
     let currentQuestion = 0;
-    var answersCorrect = 0;
-    var answersWrong = 0;
+    let answersCorrect = 0;
+    let answersWrong = 0;
 
     $("#question").hide();
     $(".answers").hide();
@@ -61,33 +61,17 @@ $(document).ready(function(){
 
        $('#question').html('<h1>' + question + '<h1>');
        $('.answers').html(displayOptions(options));
+       
     }
     
 
    function displayOptions(options){
-    // Hides the old Answers so the new answers can come in the DOM
-    $('.answers').html('');
-
+        // Hides the old Answers so the new answers can come in the DOM
+        $('.answers').html('');
        for (let i = 0; i < options.length; i++){
-           var answer1 = $('#ans1');
-           var answer2 = $('#ans2');
-           var answer3 = $('#ans3');
-           var answer4 = $('#ans4');
-           
-           if (i===0){
-               answer1.attr('data-answer', options[i]);
-           } else if (i===1){
-               answer2.attr('data-answer', options[i]);
-           } else if (i===2){
-               answer3.attr('data-answer', options[i]);
-           } else if (i===3){
-              answer4.attr('data-answer', options[i]);
-           }
-
-           var choices = questionBank[currentQuestion].options[i];
-           // Adding new answers into the DOM 
-           $('.answers').append('<p>' + '<button class="optionBtn" type = "button">' + choices + '</button>' + '</p>');
-           
+        var choices = questionBank[currentQuestion].options[i]; 
+            // Adding new answers into the DOM 
+         $('.answers').append('<p>' + `<button class="optionBtn" type = "button" data-answer = "${choices}">${choices}</button>` + '</p>'); 
        }
        
    }
@@ -100,7 +84,7 @@ $(document).ready(function(){
 
         if (isQuestionFinished === currentQuestion){
         console.log("Game Over");
-        showResult();       
+        showResult();
         } else {
         currentQuestion++;
         displayQuestion();
@@ -109,18 +93,21 @@ $(document).ready(function(){
 
     }
 
+    
+
 
     $(document).on('click','.optionBtn', function() {
         clearInterval(clockId);
-        console.log('AYE', pickedAnswer);
         var pickedAnswer = $(this).attr('data-answer');
+        console.log(pickedAnswer);
         var correctAnswer = questionBank[currentQuestion].correctAnswer;
-    
         if (pickedAnswer === correctAnswer){
+            //Tallys how many the user have right
             answersCorrect++;
             console.log('Correct');
             nextDisplayQuestion();
         } else {
+         //Tallys how many the user have wrong
             answersWrong++
             console.log('Wrong');
             nextDisplayQuestion();
@@ -129,11 +116,11 @@ $(document).ready(function(){
     
     });
 
-
+   // Displays how many answers the user have right and wrong
     function showResult(){
         const result = `
         <p>You have ${answersCorrect} correct</p>
-        <p>You have ${answersWrong}</p>
+        <p>You have ${answersWrong} wrong</p>
         <button class = "reset">Reset</button>
         
         `;
@@ -141,56 +128,17 @@ $(document).ready(function(){
 
     }
 
-    $(document).on('click', '.reset', function(){
-        shotClock = 24; 
-        currentQuestion = 0;
-        answersCorrect = 0;
-        answersWrong = 0;
-        clockId = null;
-
-
-        displayQuestion(); 
-    });
+   
+    //Reset the whole game
+    $(document).on('click', '.reset', function() {
+         shotClock = 24; 
+         currentQuestion = 0;
+         answersCorrect = 0;
+         answersWrong = 0;
+         clockId = null;
  
-   
-
-
-
-
-   
-
-    
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+         displayQuestion();
+    });
 
 
 
