@@ -50,7 +50,7 @@ const questionBank = [
         question: "What's the name of the NBA team before they called the Philadelphia 76ers?",
         options: ['Syracuse Nationals', 'Philadelphia Warriors', 'Rochester Royals','Fort Wayne Pistons'],
         correctAnswer: 'Syracuse Nationals',
-        image:'assets/images/syracuse.gif'
+        image:'assets/images/syracuse.jpg'
     },
 
     {
