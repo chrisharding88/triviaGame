@@ -16,7 +16,9 @@ $(document).ready(function(){
         $('#start').click(function(){
             $("#question").show();
             $(".answers").show();
+            //Hides the start button after it clicks
             $(this).hide();
+            // Clock starts to run after the button is clicked
             clock();
             displayQuestion();
 
@@ -28,20 +30,18 @@ $(document).ready(function(){
 
     function clock(){
         shotClock--;
-        clockRunning = true;
         $("#time").html(shotClock);
         
         //When the "shot clock" hits zero, it ends the question and it will display the answer
         if (shotClock === 0){
-            stop();
-            alert("Time's Up");
-            nextDisplayQuestion();
+            stop();         
         }
 
     } 
 
     
     function run(){
+        clockRunning = true;
         clockId = setInterval(clock, 1000);
     } 
 
@@ -49,7 +49,10 @@ $(document).ready(function(){
     function stop(){
         clearInterval(clockId);
         clockRunning = false;
-    }
+        imageDescription('lost');
+        setTimeout(newQuestion, 1000 * 3);
+    } 
+
 
   
 
@@ -79,9 +82,9 @@ $(document).ready(function(){
 
 
 
-    function nextDisplayQuestion(){
+    function newQuestion(){
         var isQuestionFinished = (questionBank.length - 1);
-
+        
         if (isQuestionFinished === currentQuestion){
         console.log("Game Over");
         showResult();
@@ -92,29 +95,66 @@ $(document).ready(function(){
         }
 
     }
-
     
 
 
     $(document).on('click','.optionBtn', function() {
+        // Clock stops when the answers is picked
         clearInterval(clockId);
+        //Grabs the data-answer attr from the button bracket
         var pickedAnswer = $(this).attr('data-answer');
         console.log(pickedAnswer);
         var correctAnswer = questionBank[currentQuestion].correctAnswer;
+        //If the answer is correct
         if (pickedAnswer === correctAnswer){
             //Tallys how many the user have right
             answersCorrect++;
-            console.log('Correct');
-            nextDisplayQuestion();
+            imageDescription('correct');
+            setTimeout(newQuestion, 1000 * 3);
         } else {
          //Tallys how many the user have wrong
-            answersWrong++
-            console.log('Wrong');
-            nextDisplayQuestion();
+            answersWrong++;
+            imageDescription('lost');
+            setTimeout(newQuestion, 1000 * 3);
+            
         } 
      
     
     });
+
+   
+
+
+    function imageDescription(status){
+
+        correctAnswer = questionBank[currentQuestion].correctAnswer; 
+        correctImage = questionBank[currentQuestion].image;
+
+        if (status === 'correct'){
+            $('#gameDisplay').html(`
+             <p>YES SIR! That is CORRECT</p>
+             <p>The correct answer is <b>${correctAnswer}</b></p>
+             <img src ="${correctImage}"/>         
+            `);
+        }else if (status === 'lost'){
+            $('#gameDisplay').html(`
+                <p>Nah bro, you LOST</p>
+                <p>The correct answer is <b>${correctAnswer}</b></p>
+                <img src ="${correctImage}"/>         
+         
+            `);
+        }
+
+
+
+
+    };
+
+
+
+
+
+
 
    // Displays how many answers the user have right and wrong
     function showResult(){
@@ -140,7 +180,7 @@ $(document).ready(function(){
          displayQuestion();
     });
 
-
+displayQuestion();
 
 
 
