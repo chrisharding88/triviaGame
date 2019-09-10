@@ -13,11 +13,14 @@ $(document).ready(function(){
 
    // Stops the clock
     function stop(){
+        //Boolean to let the user know that the clock is going to stop running
         clockRunning = false;
+
+        //Tallys the answersWrong whenever the time is up
         answersWrong++;
         clearInterval(clockId);
-        imageDescription('lost');
-        setTimeout(newQuestion, 3*1000);
+         imageDescription('lost');
+         setTimeout(newQuestion, 3*1000);
     } 
 
 
@@ -37,13 +40,15 @@ $(document).ready(function(){
 
 
     function displayQuestion(){
+        $('#question').html('');
         clockRunning = true;
         shotClock = 24;
         clockId = setInterval(clock, 1000);
+        $("#time").html(shotClock);
         const question = questionBank[currentQuestion].question;
         const options = questionBank[currentQuestion].options;
        $('#question').html('<h1>' + question + '<h1>');
-       $('.answers').html(displayOptions(options));
+       displayOptions(options);
        
     }
     
@@ -72,17 +77,21 @@ $(document).ready(function(){
         } else {
         currentQuestion++;
         displayQuestion();
+        alert('hi');
+        console.log(currentQuestion);
+        console.log(displayQuestion());
         }
 
     }
     
 
 
-    $(document).on('click','.optionBtn', function() {
+    $(document).on('click','.optionBtn', function(e) {
         // Clock stops when the answers is picked
         clearInterval(clockId);
         //Grabs the data-answer attr from the button element
         var pickedAnswer = $(this).attr('data-answer');
+        //Grabs the correctAnswer from the questionBank
         var correctAnswer = questionBank[currentQuestion].correctAnswer;
         //If the answer is correct
         if (pickedAnswer === correctAnswer){
@@ -93,11 +102,11 @@ $(document).ready(function(){
         } else {
          //Tallys how many the user have wrong
             answersWrong++;
-            imageDescription('lost');
-            setTimeout(newQuestion, 3*1000);
+             imageDescription('lost');
+             setTimeout(newQuestion, 3*1000);
 
         } 
-     
+     console.log(e);
     
     });
 
@@ -166,6 +175,7 @@ function startGame(){
     $('#start').click(function(){
      //Hides the start button after it clicks
         $(this).remove();
+        $("#time").html(shotClock);
         $("#question").show();
         $(".answers").show();
         // Clock starts to run after the button is clicked
