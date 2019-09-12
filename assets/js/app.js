@@ -7,20 +7,29 @@ $(document).ready(function(){
     let currentQuestion = 0;
     let answersCorrect = 0;
     let answersWrong = 0;
+    let correctImage;
 
-    $("#question").hide();
-    $(".answers").hide();
+    // $("#question").hide();
+    // $(".answers").hide();
 
    // Stops the clock
     function stop(){
         //Boolean to let the user know that the clock is going to stop running
         clockRunning = false;
-
+        var correctAnswer = questionBank[currentQuestion].correctAnswer;
+        var correctImage= questionBank[currentQuestion].image;
         //Tallys the answersWrong whenever the time is up
         answersWrong++;
         clearInterval(clockId);
-         imageDescription('lost');
-         setTimeout(newQuestion, 3*1000);
+        $('#question').hide();
+        $('.answers').hide();
+        $('#gameDisplay').html(`
+                <p>Nah bro, you LOST</p>
+                <p>The correct answer is <b>${correctAnswer}</b></p>
+                <img src ="${correctImage}"/>         
+         
+            `);
+         setTimeout(newQuestion, 3000);
     } 
 
 
@@ -40,22 +49,30 @@ $(document).ready(function(){
 
 
     function displayQuestion(){
+        $('#gameDisplay').html('');
         $('#question').html('');
         clockRunning = true;
         shotClock = 24;
         clockId = setInterval(clock, 1000);
         $("#time").html(shotClock);
         const question = questionBank[currentQuestion].question;
+        console.log(question)
+
         const options = questionBank[currentQuestion].options;
-       $('#question').html('<h1>' + question + '<h1>');
+        console.log(options)
+
+       $('#question').html('<h1>' + question + '</h1>');
        displayOptions(options);
        
     }
     
 
    function displayOptions(options){
-        // Hides the old Answers so the new answers can come in the DOM
-        $('.answers').html('');
+        $('#question').show();
+        $('.answers').show();
+
+     // Hides the old Answers so the new answers can come in the DOM
+        $('.answers').html("")
        for (let i = 0; i < options.length; i++){
         var choices = questionBank[currentQuestion].options[i]; 
             // Adding new answers into the DOM 
@@ -76,10 +93,8 @@ $(document).ready(function(){
         showResult();
         } else {
         currentQuestion++;
-        displayQuestion();
-        alert('hi');
-        console.log(currentQuestion);
-        console.log(displayQuestion());
+        setTimeout(displayQuestion, 3000);
+
         }
 
     }
@@ -93,52 +108,42 @@ $(document).ready(function(){
         var pickedAnswer = $(this).attr('data-answer');
         //Grabs the correctAnswer from the questionBank
         var correctAnswer = questionBank[currentQuestion].correctAnswer;
+        var correctImage= questionBank[currentQuestion].image;
+
         //If the answer is correct
         if (pickedAnswer === correctAnswer){
             //Tallys how many the user have right
             answersCorrect++;
-            imageDescription('correct');
-            setTimeout(newQuestion, 3*1000);
+             $("#question").hide();
+             $(".answers").hide();
+             $("#time").html('');
+            $('#gameDisplay').html(`
+            <p>YES SIR! That is CORRECT</p>
+            <p>The correct answer is <b>${correctAnswer}</b></p>
+            <img src ="${correctImage}"/>         
+           `);
+            newQuestion();
         } else {
          //Tallys how many the user have wrong
             answersWrong++;
-             imageDescription('lost');
-             setTimeout(newQuestion, 3*1000);
+             $("#question").hide();
+             $(".answers").hide();
+             $("#time").html('');
+            $('#gameDisplay').html(`
+            <p>Nah bro, you LOST</p>
+            <p>The correct answer is <b>${correctAnswer}</b></p>
+            <img src ="${correctImage}"/>         
+            `);
+            
+             newQuestion();
 
         } 
-     console.log(e);
     
     });
 
 
-   
 
-
-    function imageDescription(status){
-
-        
-        correctAnswer = questionBank[currentQuestion].correctAnswer; 
-        correctImage = questionBank[currentQuestion].image;
-
-        if (status === 'correct'){
-            $('#gameDisplay').html(`
-             <p>YES SIR! That is CORRECT</p>
-             <p>The correct answer is <b>${correctAnswer}</b></p>
-             <img src ="${correctImage}"/>         
-            `);
-        }else if (status === 'lost'){
-            $('#gameDisplay').html(`
-                <p>Nah bro, you LOST</p>
-                <p>The correct answer is <b>${correctAnswer}</b></p>
-                <img src ="${correctImage}"/>         
-         
-            `);
-        }
-
-
-
-
-    };
+    
 
 
 
@@ -176,8 +181,8 @@ function startGame(){
      //Hides the start button after it clicks
         $(this).remove();
         $("#time").html(shotClock);
-        $("#question").show();
-        $(".answers").show();
+        // $("#question").show();
+        // $(".answers").show();
         // Clock starts to run after the button is clicked
         displayQuestion();
 
