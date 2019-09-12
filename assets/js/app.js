@@ -9,6 +9,11 @@ $(document).ready(function(){
     let answersWrong = 0;
     let correctImage;
 
+    var buzzer = document.createElement('audio');
+    buzzer = new Audio('assets/sounds/buzzer.mp3');
+
+
+
     
 
    // Stops the clock if the user didn't answer the question on time
@@ -46,6 +51,7 @@ $(document).ready(function(){
         //When the "shot clock" hits zero, it ends the question and it will display the answer
         if (shotClock === 0){
             stop();
+            buzzer.play();
         }
 
     } 
