@@ -28,14 +28,16 @@ $(document).ready(function(){
         //hides the question & answers
         $('#question').hide();
         $('.answers').hide();
+        $("#time").html('');
         //Appears on the screen to indicate that the user lost
         // Also displays the correct answer and image
         $('#gameDisplay').html(`
                 <p>Nah bro, you LOST</p>
                 <p>The correct answer is <b>${correctAnswer}</b></p>
-                <img src ="${correctImage}"/>         
+                <img src ="${correctImage}" class ="imageAnswers"/>         
          
             `);
+            $('.imageAnswers').css({'width':'500px', 'height': '300px'});
         // Sets up 3 seconds to display the image & answer before moving on to the next question
          setTimeout(newQuestion, 3000);
     } 
@@ -165,7 +167,7 @@ $(document).ready(function(){
              newQuestion();
 
         } 
-    
+        $('.imageAnswers').css({'width':'500px', 'height': '300px'});
     });
 
 
