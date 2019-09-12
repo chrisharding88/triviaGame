@@ -1,5 +1,7 @@
 body{
     background: url('../images/hardwood.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
