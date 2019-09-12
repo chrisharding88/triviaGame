@@ -9,10 +9,9 @@ $(document).ready(function(){
     let answersWrong = 0;
     let correctImage;
 
-    // $("#question").hide();
-    // $(".answers").hide();
+    
 
-   // Stops the clock
+   // Stops the clock if the user didn't answer the question on time
     function stop(){
         //Boolean to let the user know that the clock is going to stop running
         clockRunning = false;
@@ -21,14 +20,18 @@ $(document).ready(function(){
         //Tallys the answersWrong whenever the time is up
         answersWrong++;
         clearInterval(clockId);
+        //hides the question & answers
         $('#question').hide();
         $('.answers').hide();
+        //Appears on the screen to indicate that the user lost
+        // Also displays the correct answer and image
         $('#gameDisplay').html(`
                 <p>Nah bro, you LOST</p>
                 <p>The correct answer is <b>${correctAnswer}</b></p>
                 <img src ="${correctImage}"/>         
          
             `);
+        // Sets up 3 seconds to display the image & answer before moving on to the next question
          setTimeout(newQuestion, 3000);
     } 
 
@@ -36,7 +39,9 @@ $(document).ready(function(){
 
 
     function clock(){
+        // Decrementing the timer
         shotClock--;
+        //Display the timer in the DOM.
         $("#time").html(shotClock);
         //When the "shot clock" hits zero, it ends the question and it will display the answer
         if (shotClock === 0){
@@ -52,16 +57,20 @@ $(document).ready(function(){
         $('#gameDisplay').html('');
         $('#question').html('');
         clockRunning = true;
+
         shotClock = 24;
+        //Decrementing the timer each second
         clockId = setInterval(clock, 1000);
         $("#time").html(shotClock);
+
+        // Set up as constants to catch from questionBank array(see questionBank.js)
         const question = questionBank[currentQuestion].question;
-        console.log(question)
-
         const options = questionBank[currentQuestion].options;
-        console.log(options)
 
+        //Displays every single question
        $('#question').html('<h1>' + question + '</h1>');
+
+       // Executes the displayOptions function
        displayOptions(options);
        
     }
@@ -74,8 +83,10 @@ $(document).ready(function(){
      // Hides the old Answers so the new answers can come in the DOM
         $('.answers').html("")
        for (let i = 0; i < options.length; i++){
+        //set as a variable to catch from question bank
+        // Also use to set an attribute 'data-answer'
         var choices = questionBank[currentQuestion].options[i]; 
-            // Adding new answers into the DOM 
+        // Adding new answers into the DOM 
          $('.answers').append('<p>' + `<button class="optionBtn" type = "button" data-answer = "${choices}">${choices}</button>` + '</p>'); 
        }
        
@@ -85,14 +96,19 @@ $(document).ready(function(){
 
 
     function newQuestion(){
+        //Set as a constant to tell that the question is finished
         const isQuestionFinished = (questionBank.length - 1);
         
+        //Condition when the game is finished
         if (isQuestionFinished === currentQuestion){
-        console.log("Game Over");
+        //Stops the clock
         clockRunning = false;
+        //Displays the result of how many answer correct and wrong
         showResult();
         } else {
+        // incrementing the questions from the questionBank array
         currentQuestion++;
+        //Set the timer in 3 seconds to move on to another question
         setTimeout(displayQuestion, 3000);
 
         }
@@ -114,39 +130,37 @@ $(document).ready(function(){
         if (pickedAnswer === correctAnswer){
             //Tallys how many the user have right
             answersCorrect++;
+            //Hides the questions and answers
              $("#question").hide();
              $(".answers").hide();
              $("#time").html('');
+            //Appears when the user gets the answer right
             $('#gameDisplay').html(`
             <p>YES SIR! That is CORRECT</p>
             <p>The correct answer is <b>${correctAnswer}</b></p>
-            <img src ="${correctImage}"/>         
+            <img src ="${correctImage}" class="imageAnswers"/>         
            `);
+            // Executes the new Question
             newQuestion();
         } else {
          //Tallys how many the user have wrong
             answersWrong++;
+            //Hides the questions and answers
              $("#question").hide();
              $(".answers").hide();
              $("#time").html('');
+             //Appears when the user gets the answer wrong
             $('#gameDisplay').html(`
             <p>Nah bro, you LOST</p>
             <p>The correct answer is <b>${correctAnswer}</b></p>
-            <img src ="${correctImage}"/>         
+            <img src ="${correctImage}" class ="imageAnswers"/>         
             `);
-            
+            //Executes the new Question
              newQuestion();
 
         } 
     
     });
-
-
-
-    
-
-
-
 
 
 
@@ -159,6 +173,7 @@ $(document).ready(function(){
         <button class = "reset">Reset</button>
         
         `;
+        //Displays the results
         $('#gameDisplay').html(result);
 
     }
@@ -181,8 +196,6 @@ function startGame(){
      //Hides the start button after it clicks
         $(this).remove();
         $("#time").html(shotClock);
-        // $("#question").show();
-        // $(".answers").show();
         // Clock starts to run after the button is clicked
         displayQuestion();
 

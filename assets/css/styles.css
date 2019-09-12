@@ -10,11 +10,11 @@ body{
     text-align: center;
     margin: 0 auto;
     border: 2px solid black;
-    width: 950px;
-    height: 550px;
+    width: 1150px;
+    height: 750px;
     margin-top: 12%;
     padding: 30px;  
-    background-color: white;  
+    background-color: rgba(0, 0, 0, 0.5);  
 }
 
 
@@ -23,7 +23,7 @@ body{
     width:50px;
     height:70px;
     float: left;
-    margin-left: 38%;
+    margin-left: 40%;
     border-radius: 10%;
     border: 2px solid white;
 }
@@ -33,9 +33,12 @@ body{
     font-family: 'abolition', sans-serif; 
     font-weight: bold; 
     font-style: normal; 
+    float: right;
     letter-spacing: 4px;
     font-size: 45px;
-    color: blue;
+    color: white;
+    width: 31%;
+
 }
 
 
@@ -49,10 +52,29 @@ body{
     background-color: #110f0f;
     width: 110px;
     margin: 0 auto;
+    clear: both;
+}
+
+#box-wrap{
+    border: 20px solid #ffffff;
+    text-align: center;
+    width: 35%;
+    margin-left:32%;
+    padding: 15px;
 }
 
 #start{
-    margin-top: 5%;
+    margin-top: 6%;
     padding: 25px;
     font-size: 30px;
+}
+
+#gameDisplay{
+    color: #ffffff;
+}
+
+
+#question{
+    margin-top: 5%;
+    color: #ffffff;
 }
