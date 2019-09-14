@@ -29,6 +29,8 @@ $(document).ready(function(){
         $('#question').hide();
         $('.answers').hide();
         $("#time").html('');
+        //Changes the border color when the clock hit zero
+        $('#trivia-question').css({'border' : '15px solid #fa1100'});
         //Appears on the screen to indicate that the user lost
         // Also displays the correct answer and image
         $('#gameDisplay').html(`
@@ -87,7 +89,8 @@ $(document).ready(function(){
    function displayOptions(options){
         $('#question').show();
         $('.answers').show();
-
+        //Changes back to the normal border color
+        $('#trivia-question').css({'border' : '15px solid white'});
      // Hides the old Answers so the new answers can come in the DOM
         $('.answers').html("")
        for (let i = 0; i < options.length; i++){
