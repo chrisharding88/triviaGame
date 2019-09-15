@@ -51,6 +51,7 @@ body{
     font-style: normal; 
     font-size: 70px;
     color: #f00c0c;
+    border: 4px solid white;
     background-color: #110f0f;
     width: 110px;
     margin: 0 auto;
