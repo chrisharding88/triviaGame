@@ -1,1 +1,3 @@
 # triviaGame
+
+Created a trivia game filled with NBA questions from the past to the present. In this assignment, I created two seperate .js files, app.js & questionsBank. js. For the questionBank.js, I created an array called questionBank and it's full of questions, choices, and correct answers. For the app.js, I use mostly jQuery and some javascript to manipulated it to the DOM. I did the advanced version. What it does is that it displays a question and four options. If you make a choice, right or wrong, it displays the right answers and a .gif image. After the game is finished, it will show how many you have correct and incorrect. 
